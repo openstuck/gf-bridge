@@ -36,7 +36,10 @@ export const Context = createContext<ModalsContext>({
   setCloseOnOverlayClick: () => true,
 });
 
-const ModalProvider: React.FC = ({ children }) => {
+interface Props {
+  children: React.ReactNode;
+}
+const ModalProvider: React.FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalNode, setModalNode] = useState<React.ReactNode>();
   const [nodeId, setNodeId] = useState("");
