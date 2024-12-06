@@ -7,13 +7,16 @@ const StepperWrapper = styled.div<ThemedProps>`
   flex-direction: column;
   width: fit-content;
 `;
-
-const Stepper: React.FC = ({ children }) => {
+interface Props {
+  children: React.ReactNode;
+}
+const Stepper: React.FC<Props> = ({ children }) => {
   const numberOfSteps = React.Children.count(children);
   return (
     <StepperWrapper>
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
+          // @ts-expect-error
           return React.cloneElement(child, { numberOfSteps });
         }
         return child;

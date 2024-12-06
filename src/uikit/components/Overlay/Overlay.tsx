@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { FC, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { Box, BoxProps } from "../Box";
 
 const StyledOverlay = styled(Box)`

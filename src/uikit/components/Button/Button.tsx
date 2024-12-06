@@ -1,10 +1,21 @@
-import React, { cloneElement, ElementType, isValidElement } from "react";
+import { cloneElement, ElementType, isValidElement } from "react";
 import getExternalLinkProps from "../../util/getExternalLinkProps";
 import StyledButton from "./StyledButton";
 import { ButtonProps, scales, variants } from "./types";
 
-const Button = <E extends ElementType = "button">(props: ButtonProps<E>): JSX.Element => {
-  const { startIcon, endIcon, external, className, isLoading, disabled, children, ...rest } = props;
+const Button = <E extends ElementType = "button">(
+  props: ButtonProps<E>
+): JSX.Element => {
+  const {
+    startIcon,
+    endIcon,
+    external,
+    className,
+    isLoading,
+    disabled,
+    children,
+    ...rest
+  } = props;
   const internalProps = external ? getExternalLinkProps() : {};
   const isDisabled = isLoading || disabled;
   const classNames = className ? [className] : [];
@@ -28,12 +39,12 @@ const Button = <E extends ElementType = "button">(props: ButtonProps<E>): JSX.El
       <>
         {isValidElement(startIcon) &&
           cloneElement(startIcon, {
-        //    mr: "0.5rem",
+            //    mr: "0.5rem",
           })}
         {children}
         {isValidElement(endIcon) &&
           cloneElement(endIcon, {
-         //   ml: "0.5rem",
+            //   ml: "0.5rem",
           })}
       </>
     </StyledButton>

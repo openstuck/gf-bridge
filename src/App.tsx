@@ -14,7 +14,6 @@ import {
 import { roburnaNetwork, roburnaTestnetNetwork } from "./config/network";
 import { projectId, metadata } from "./config/walletconnect";
 import BridgeCard from "./bridge/components/BridgeCard";
-import { padding } from "styled-system";
 
 createAppKit({
   adapters: [new Ethers5Adapter()],

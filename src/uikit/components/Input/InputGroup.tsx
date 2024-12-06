@@ -1,4 +1,4 @@
-import React, { cloneElement } from "react";
+import { cloneElement } from "react";
 import styled from "styled-components";
 import Box from "../Box/Box";
 import Input from "./Input";
@@ -20,9 +20,14 @@ const getPadding = (scale: Scales, hasIcon: boolean) => {
   }
 };
 
-const StyledInputGroup = styled(Box)<{ scale: Scales; hasStartIcon: boolean; hasEndIcon: boolean }>`
+const StyledInputGroup = styled(Box)<{
+  scale: Scales;
+  hasStartIcon: boolean;
+  hasEndIcon: boolean;
+}>`
   display: flex;
-  // padding-left: ${({ hasStartIcon, scale }) => getPadding(scale, hasStartIcon)};
+  /* padding-left: ${({ hasStartIcon, scale }) =>
+    getPadding(scale, hasStartIcon)}; */
   padding-right: ${({ hasEndIcon, scale }) => getPadding(scale, hasEndIcon)};
   background: transparent;
   border-radius: 50px;
@@ -32,7 +37,8 @@ const StyledInputGroup = styled(Box)<{ scale: Scales; hasStartIcon: boolean; has
     border: none;
     background-color: transparent;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       border-color: transparent;
       box-shadow: none;
     }
@@ -63,9 +69,17 @@ const ItemGroup = styled.div`
   top: 0;
   padding: 0px 8px;
   border-right: 1px solid #52555c;
-`
+`;
 
-const InputGroup = ({ scale = scales.MD, startIcon, startItem, endIcon, children, onEndClick, ...props }: InputGroupProps): JSX.Element => (
+const InputGroup = ({
+  scale = scales.MD,
+  startIcon,
+  startItem,
+  endIcon,
+  children,
+  onEndClick,
+  ...props
+}: InputGroupProps): JSX.Element => (
   <StyledInputGroup
     scale={scale}
     width="100%"

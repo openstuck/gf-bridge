@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useState, useEffect } from "react";
 import { Box, BoxProps, Text, Input } from "../../uikit";
 import styled from "styled-components";
-import { isAddress } from "utils";
-import { useTranslation } from "contexts/Localization";
-import CircleLoader from "components/Loader/CircleLoader";
+// import { isAddress } from "utils";
+// import { useTranslation } from "contexts/Localization";
+// import CircleLoader from "components/Loader/CircleLoader";
 
 enum ResultStatus {
   NOT_VALID,

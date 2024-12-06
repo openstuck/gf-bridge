@@ -20,6 +20,8 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       '@typescript-eslint/no-explicit-any': 'off',
+      "@typescript-eslint/no-empty-object-type": "warn",
+      "@typescript-eslint/ban-ts-comment": "warn",
       "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
       'react-refresh/only-export-components': [
         'warn',

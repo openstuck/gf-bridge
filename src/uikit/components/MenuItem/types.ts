@@ -8,6 +8,7 @@ export interface MenuItemProps {
   variant?: MenuItemVariant;
   statusColor?: keyof Colors;
   menuIndex?: number;
+  children?: React.ReactNode;
 }
 
 export type StyledMenuItemProps = {

@@ -24,7 +24,7 @@ const DropdownContent = styled.div<{ position: Position }>`
   transform: translate(-50%, 0);
   left: ${getLeft};
   bottom: ${getBottom};
-  background-color: ${({ theme }) => theme.nav.background};
+  background-color: ${({ theme }) => theme.colors.background};
   box-shadow: ${({ theme }) => theme.shadows.level1};
   padding: 16px;
   max-height: 400px;
@@ -40,7 +40,11 @@ const Container = styled.div`
   }
 `;
 
-const Dropdown: React.FC<DropdownProps> = ({ target, position = "bottom", children }) => {
+const Dropdown: React.FC<DropdownProps> = ({
+  target,
+  position = "bottom",
+  children,
+}) => {
   return (
     <Container>
       {target}

@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import styled, { keyframes, css } from "styled-components";
 
 const MountAnimation = keyframes`

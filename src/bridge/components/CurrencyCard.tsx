@@ -1,66 +1,74 @@
-import React from 'react'
-import { Currency, Pair } from '@greenfolio/swap-sdk-0x'
-import { Button, ChevronDownIcon, Text, useModal, Flex, Box, ChevronRightIcon } from 'toolkit'
-import styled from 'styled-components'
-import { AutoColumn } from 'components/Layout/Column'
-import { useTranslation } from 'contexts/Localization'
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useCurrencyBalance } from 'state/wallet/hooks'
-import CurrencySearchModal from 'components/SearchModal/CurrencySearchModal'
-import { CurrencyLogo, DoubleCurrencyLogo } from 'components/Logo'
-import { AutoRow, RowBetween } from 'components/Layout/Row'
+import React from "react";
+import { Currency, Pair } from "@greenfolio/swap-sdk-0x";
+import {
+  Button,
+  ChevronDownIcon,
+  Text,
+  useModal,
+  Flex,
+  Box,
+  ChevronRightIcon,
+} from "toolkit";
+import styled from "styled-components";
+import { AutoColumn } from "components/Layout/Column";
+import { useTranslation } from "contexts/Localization";
+import useActiveWeb3React from "hooks/useActiveWeb3React";
+import { useCurrencyBalance } from "state/wallet/hooks";
+import CurrencySearchModal from "components/SearchModal/CurrencySearchModal";
+import { CurrencyLogo, DoubleCurrencyLogo } from "components/Logo";
+import { RowBetween } from "components/Layout/Row";
 
-const InputRow = styled.div<{ selected: boolean }>`
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: flex-end;
-  padding: ${({ selected }) => (selected ? '0.75rem 0.5rem 0.75rem 1rem' : '0.75rem 0.75rem 0.75rem 1rem')};
-`
-const CurrencySelectButton = styled(Button).attrs({ variant: 'text', scale: 'sm' })`
-  padding: 0 0.5rem;
-`
-const LabelRow = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  color: ${({ theme }) => theme.colors.text};
-  font-size: 0.75rem;
-  line-height: 1rem;
-  padding: 0.75rem 1rem 0.75rem 1rem;
-`
-const InputPanel = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  position: relative;
-  border-radius: '20px';
-  // background-color: ${({ theme }) => theme.colors.backgroundAlt};
-  z-index: 1;
-`
-const Container = styled.div`
-  border-radius: 16px;
-  background-color: ${({ theme }) => theme.colors.input};
-  box-shadow: ${({ theme }) => theme.shadows.inset};
-`
+// const InputRow = styled.div<{ selected: boolean }>`
+//   display: flex;
+//   flex-flow: row nowrap;
+//   align-items: center;
+//   justify-content: flex-end;
+//   padding: ${({ selected }) => (selected ? '0.75rem 0.5rem 0.75rem 1rem' : '0.75rem 0.75rem 0.75rem 1rem')};
+// `
+// const CurrencySelectButton = styled(Button).attrs({ variant: 'text', scale: 'sm' })`
+//   padding: 0 0.5rem;
+// `
+// const LabelRow = styled.div`
+//   display: flex;
+//   flex-flow: row nowrap;
+//   align-items: center;
+//   color: ${({ theme }) => theme.colors.text};
+//   font-size: 0.75rem;
+//   line-height: 1rem;
+//   padding: 0.75rem 1rem 0.75rem 1rem;
+// `
+// const InputPanel = styled.div`
+//   display: flex;
+//   flex-flow: column nowrap;
+//   position: relative;
+//   border-radius: '20px';
+//   // background-color: ${({ theme }) => theme.colors.backgroundAlt};
+//   z-index: 1;
+// `
+// const Container = styled.div`
+//   border-radius: 16px;
+//   background-color: ${({ theme }) => theme.colors.input};
+//   box-shadow: ${({ theme }) => theme.shadows.inset};
+// `
 interface CurrencyProps {
-  value: string
-  onUserInput: (value: string) => void
-  onMax?: () => void
-  showMaxButton: boolean
-  label?: string
-  onCurrencySelect: (currency: Currency) => void
-  currency?: Currency | null
-  disableCurrencySelect?: boolean
-  hideBalance?: boolean
-  pair?: Pair | null
-  otherCurrency?: Currency | null
-  id: string
-  showCommonBases?: boolean
-  titleLabel?: string
-  Buttonheading?: string
-  stake?: boolean
-  imgURl?: string
-  hideFrom?: boolean
+  value: string;
+  onUserInput: (value: string) => void;
+  onMax?: () => void;
+  showMaxButton: boolean;
+  label?: string;
+  onCurrencySelect: (currency: Currency) => void;
+  currency?: Currency | null;
+  disableCurrencySelect?: boolean;
+  hideBalance?: boolean;
+  pair?: Pair | null;
+  otherCurrency?: Currency | null;
+  id: string;
+  showCommonBases?: boolean;
+  titleLabel?: string;
+  Buttonheading?: string;
+  stake?: boolean;
+  imgURl?: string;
+  hideFrom?: boolean;
 }
 export default function CurrencyCard({
   value,
@@ -82,9 +90,12 @@ export default function CurrencyCard({
   imgURl,
   hideFrom = false,
 }: CurrencyProps) {
-  const { account } = useActiveWeb3React()
-  const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
-  const { t } = useTranslation()
+  const { account } = useActiveWeb3React();
+  const selectedCurrencyBalance = useCurrencyBalance(
+    account ?? undefined,
+    currency ?? undefined
+  );
+  const { t } = useTranslation();
 
   const [onPresentCurrencyModal] = useModal(
     <CurrencySearchModal
@@ -92,8 +103,8 @@ export default function CurrencyCard({
       selectedCurrency={currency}
       otherSelectedCurrency={otherCurrency}
       showCommonBases={showCommonBases}
-    />,
-  )
+    />
+  );
   return (
     <Box id={id}>
       <Flex mb="6px" alignItems="center" justifyContent="space-between">
@@ -112,11 +123,19 @@ export default function CurrencyCard({
                 onClick={onMax}
                 color="textSubtle"
                 fontSize="14px"
-                style={{ display: 'inline', cursor: 'pointer', paddingRight: '10px' }}
+                style={{
+                  display: "inline",
+                  cursor: "pointer",
+                  paddingRight: "10px",
+                }}
               >
                 {currency
-                  ? t('Bal: %balance%', { balance: selectedCurrencyBalance?.toSignificant(6) ?? t('Loading') })
-                  : ' -'}
+                  ? t("Bal: %balance%", {
+                      balance:
+                        selectedCurrencyBalance?.toSignificant(6) ??
+                        t("Loading"),
+                    })
+                  : " -"}
               </Text>
               <Text fontSize="14px" color="textSubtle">
                 MAX
@@ -131,15 +150,28 @@ export default function CurrencyCard({
           selected={!!currency}
           onClick={() => {
             if (!disableCurrencySelect) {
-              onPresentCurrencyModal()
+              onPresentCurrencyModal();
             }
           }}
         >
-          <Flex alignItems="center" justifyContent="space-between" style={{ marginRight: '-16px' }}>
+          <Flex
+            alignItems="center"
+            justifyContent="space-between"
+            style={{ marginRight: "-16px" }}
+          >
             {pair ? (
-              <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={16} margin />
+              <DoubleCurrencyLogo
+                currency0={pair.token0}
+                currency1={pair.token1}
+                size={16}
+                margin
+              />
             ) : currency ? (
-              <CurrencyLogo currency={currency} size="24px" style={{ marginRight: '8px' }} />
+              <CurrencyLogo
+                currency={currency}
+                size="24px"
+                style={{ marginRight: "8px" }}
+              />
             ) : null}
             {pair ? (
               <Text id="pair" bold>
@@ -150,15 +182,17 @@ export default function CurrencyCard({
                 {(currency && currency.symbol && currency.symbol.length > 20
                   ? `${currency.symbol.slice(0, 4)}...${currency.symbol.slice(
                       currency.symbol.length - 5,
-                      currency.symbol.length,
+                      currency.symbol.length
                     )}`
-                  : currency?.symbol) || t('Select a currency')}
+                  : currency?.symbol) || t("Select a currency")}
               </Text>
             )}
-            {!disableCurrencySelect && <ChevronDownIcon width="32px" color="textSubtle" />}
+            {!disableCurrencySelect && (
+              <ChevronDownIcon width="32px" color="textSubtle" />
+            )}
           </Flex>
         </CurrencySelectButton>
       </Flex>
     </Box>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from "styled-components";
 
 const ResetCSS = createGlobalStyle`
   /* prettier-ignore */
@@ -84,11 +84,9 @@ const ResetCSS = createGlobalStyle`
     width: 8px;
   }
   ::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.textSubtle}; 
     border-radius: 8px;
   }
   ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px ${({ theme }) => theme.colors.input}; 
     border-radius: 10px;
   }
 
@@ -112,6 +110,6 @@ const ResetCSS = createGlobalStyle`
     border-color: transparent;
     color: transparent;
   }  
-`
+`;
 
-export default ResetCSS
+export default ResetCSS;

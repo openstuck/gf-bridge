@@ -7,9 +7,10 @@ export const variants = {
   SUCCESS: "success",
 } as const;
 
-export type Variant = typeof variants[keyof typeof variants];
+export type Variant = (typeof variants)[keyof typeof variants];
 
 export interface MessageProps extends SpaceProps {
   variant: Variant;
   icon?: React.ReactNode;
+  children?: React.ReactNode;
 }

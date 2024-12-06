@@ -5,7 +5,12 @@ import IconComponent from "../Svg/IconComponent";
 import StyledSubMenuItems from "./styles";
 import { SubMenuItemsProps } from "./types";
 
-const SubMenuItems: React.FC<SubMenuItemsProps> = ({ items = [], activeItem, isMobileOnly = false, ...props }) => {
+const SubMenuItems: React.FC<SubMenuItemsProps> = ({
+  items = [],
+  activeItem,
+  isMobileOnly = false,
+  ...props
+}) => {
   return (
     <StyledSubMenuItems
       justifyContent={[isMobileOnly ? "flex-end" : "center", null, "center"]}
@@ -17,8 +22,12 @@ const SubMenuItems: React.FC<SubMenuItemsProps> = ({ items = [], activeItem, isM
       {items.map(
         ({ label, href, iconName }) =>
           label && (
-            <Box key={label} mr="20px" style={{cursor: "pointer"}}>
-              <MenuItem href={href} isActive={href === activeItem} variant="subMenu">
+            <Box key={label} mr="20px" style={{ cursor: "pointer" }}>
+              <MenuItem
+                href={href}
+                isActive={href === activeItem}
+                variant="subMenu"
+              >
                 {iconName && (
                   <IconComponent
                     color={href === activeItem ? "secondary" : "textSubtle"}

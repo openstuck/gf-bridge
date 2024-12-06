@@ -21,8 +21,19 @@ const MenuItem: React.FC<MenuItemProps> = ({
         as: "div",
       };
   return (
-    <StyledMenuItemContainer $isActive={isActive} $variant={variant} menuIndex={menuIndex}>
-      <StyledMenuItem {...itemLinkProps} $isActive={isActive} $variant={variant} $statusColor={statusColor} {...props}>
+    <StyledMenuItemContainer
+      $isActive={isActive}
+      $variant={variant}
+      menuIndex={menuIndex}
+    >
+      <StyledMenuItem
+        // @ts-expect-error
+        {...itemLinkProps}
+        $isActive={isActive}
+        $variant={variant}
+        $statusColor={statusColor}
+        {...props}
+      >
         {children}
       </StyledMenuItem>
     </StyledMenuItemContainer>

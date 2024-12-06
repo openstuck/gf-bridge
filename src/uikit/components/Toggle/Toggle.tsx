@@ -15,22 +15,44 @@ const Toggle: React.FC<ToggleProps> = ({
   const isChecked = !!checked;
 
   return (
-    <StyledToggle $checked={isChecked} $checkedColor={checkedColor} $defaultColor={defaultColor} scale={scale}>
+    <StyledToggle
+      $checked={isChecked}
+      $checkedColor={checkedColor}
+      $defaultColor={defaultColor}
+      scale={scale}
+    >
       <Input checked={checked} scale={scale} {...props} type="checkbox" />
       {startIcon && endIcon ? (
         <>
-          <Handle scale={scale} $checked={checked} $checkedColor="#4C6D2B" $defaultColor="#091D1A">
+          <Handle
+            scale={scale}
+            // @ts-expect-error
+            $checked={checked}
+            $checkedColor="#4C6D2B"
+            $defaultColor="#091D1A"
+          >
             <Flex height="100%" alignItems="center" justifyContent="center">
               {checked ? endIcon(checked) : startIcon(!checked)}
             </Flex>
           </Handle>
-          <Flex width="100%" height="100%" justifyContent="space-around" alignItems="center">
+          <Flex
+            width="100%"
+            height="100%"
+            justifyContent="space-around"
+            alignItems="center"
+          >
             {startIcon()}
             {endIcon()}
           </Flex>
         </>
       ) : (
-        <Handle scale={scale} $checked={checked} $defaultColor="white" $checkedColor="#4C6D2B" />
+        <Handle
+          scale={scale}
+          // @ts-expect-error
+          $checked={checked}
+          $defaultColor="white"
+          $checkedColor="#4C6D2B"
+        />
       )}
     </StyledToggle>
   );
