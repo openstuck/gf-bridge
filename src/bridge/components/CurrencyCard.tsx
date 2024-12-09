@@ -1,5 +1,4 @@
-import React from "react";
-import { Currency, Pair } from "@greenfolio/swap-sdk-0x";
+import { Currency, Pair } from "@arborswap/sdk";
 import {
   Button,
   ChevronDownIcon,
@@ -8,7 +7,7 @@ import {
   Flex,
   Box,
   ChevronRightIcon,
-} from "toolkit";
+} from "../../uikit";
 import styled from "styled-components";
 import { AutoColumn } from "components/Layout/Column";
 import { useTranslation } from "contexts/Localization";

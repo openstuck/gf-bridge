@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@arborswap/sdk": "https://github.com/wongjapan/arborswap-sdk-mainnet.git#f4bd201",
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
     "@reown/appkit": "^1.5.3",

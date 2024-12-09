@@ -1,16 +1,20 @@
+import { useEffect, useState } from "react";
 import { AppBody } from "../../components/App";
 import { AutoColumn } from "../../components/Layout/Column";
 import { RowBetween } from "../../components/Layout/Row";
 
 import { ArrowDownIcon, Button, Flex, Heading, Input, Text } from "../../uikit";
-import { useAppKit } from "@reown/appkit/react";
+import {
+  useAppKit,
+  useAppKitNetwork,
+  useAppKitAccount,
+} from "@reown/appkit/react";
 
 import { chains } from "../../utils/chains";
 
 // import CurrencyCard from "./CurrencyCard";
 import ChainSelector from "./ChainSelector";
 import Refuel from "./Refuel";
-import AddressModal from "../modal/AddressModal";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -19,6 +23,14 @@ export const Wrapper = styled.div`
 `;
 
 export default function BridgeCard() {
+  const { chainId, switchNetwork } = useAppKitNetwork();
+  const { address, isConnected, caipAddress, status } = useAppKitAccount();
+  const handleMaxInput = () => {};
+
+  const { fromChain, setFromChain } = useState(0);
+
+  useEffect(() => {}, [fromChain, chainId]);
+
   return (
     <Flex
       width="100%"
@@ -59,12 +71,8 @@ export default function BridgeCard() {
                     className="padding-imp"
                     style={{ borderBottom: "1px solid #222230" }}
                   >
-                    {/* <ChainSelector
-                      chain={chains[chain - 1]}
-                      setChain={setChain}
-                      title="From"
-                    />
-                    {account && (
+                    <ChainSelector chain={chains[0]} title="From" />
+                    {address && (
                       <Flex alignItems="center">
                         <Text
                           onClick={handleMaxInput}
@@ -76,47 +84,28 @@ export default function BridgeCard() {
                             paddingRight: "10px",
                           }}
                         >
-                          {currencies[Field.INPUT]
+                          {/* {currencies[Field.INPUT]
                             ? t("Bal: %balance%", {
                                 balance:
                                   selectedCurrencyBalance?.toSignificant(6) ??
                                   t("Loading"),
                               })
-                            : " -"}
+                            : " -"} */}
                         </Text>
                         <Text fontSize="14px" color="textSubtle">
                           MAX
                         </Text>
                       </Flex>
-                    )} */}
+                    )}
                   </RowBetween>
                   <RowBetween align="center" className="padding-imp">
-                    {/* <Input
+                    <Input
                       type="number"
                       className="amountInput"
                       placeholder="0.0"
-                      defaultValue={amount}
-                      onChange={(e) => setAmount(e.target.value)}
+                      // defaultValue={amount}
+                      // onChange={(e) => setAmount(e.target.value)}
                     />
-                    <CurrencyCard
-                      titleLabel="From"
-                      label={
-                        independentField === Field.OUTPUT && !showWrap && trade
-                          ? t("From (estimated)")
-                          : t("From")
-                      }
-                      value={formattedAmounts[Field.INPUT]}
-                      showMaxButton={!atMaxAmountInput}
-                      currency={currencies[Field.INPUT]}
-                      onUserInput={handleTypeInput}
-                      onMax={handleMaxInput}
-                      onCurrencySelect={handleInputSelect}
-                      hideBalance
-                      hideFrom
-                      otherCurrency={currencies[Field.OUTPUT]}
-                      id="bridge-currency-input"
-                      imgURl="/images/home2.0/purple-ethereum.svg"
-                    /> */}
                   </RowBetween>
                 </Flex>
                 <Flex width="100%" justifyContent="center" alignItems="center">
@@ -135,12 +124,7 @@ export default function BridgeCard() {
                 >
                   <AutoColumn gap="md">
                     <RowBetween align="center" className="padding-imp">
-                      {/* <ChainSelector
-                        chain={chains[2]}
-                        setChain={setChain}
-                        hideInfo
-                        title="To"
-                      /> */}
+                      <ChainSelector chain={chains[2]} hideInfo title="To" />
 
                       {/* {account && (
                         <Flex alignItems="center">
@@ -161,13 +145,11 @@ export default function BridgeCard() {
                     </RowBetween>
                   </AutoColumn>
                   <RowBetween align="center" className="padding-imp">
-                    {/* <Input
+                    <Input
                       type="number"
                       className="amountInput"
                       placeholder="0.0"
-                      defaultValue={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                    /> */}
+                    />
                     <ArrowDownIcon />
                   </RowBetween>
                 </Flex>
@@ -215,14 +197,7 @@ export default function BridgeCard() {
         justifyContent="center"
         alignItems="center"
         style={{ marginTop: "20px" }}
-      >
-        {/* {showAddressModal && (
-          <AddressModal
-            onDismiss={() => setShowAddressModal(false)}
-            isOpen={showAddressModal}
-          />
-        )} */}
-      </Flex>
+      ></Flex>
     </Flex>
   );
 }

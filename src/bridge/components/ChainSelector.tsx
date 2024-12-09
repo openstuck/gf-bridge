@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Button, Flex, useModal } from "../../uikit";
-import ChainSearchModal from "../modal/ChainSearchModal";
 
 interface ChainSelectorProps {
   chain?: any;
@@ -22,24 +21,12 @@ export default function ChainSelector({
   hideInfo = false,
   title,
 }: ChainSelectorProps) {
-  const [onPresentChainModal] = useModal(
-    <ChainSearchModal
-      onChainSelect={(e: number) => {
-        setChain(e);
-      }}
-    />
-  );
-
   return (
     <>
       <Flex flexDirection="row" alignItems="center">
         <ChainSelectButton
           className="open-chain-select-button"
-          onClick={() => {
-            if (!disableChainSelect) {
-              onPresentChainModal();
-            }
-          }}
+          onClick={() => {}}
         >
           <Flex alignItems="center" justifyContent="space-between">
             <span>{title}</span>
