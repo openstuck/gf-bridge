@@ -1,8 +1,8 @@
-import React from "react";
+// import React from "react";
 import styled from "styled-components";
 
 import { ChevronDownIcon, Button, Flex } from "../../uikit";
-import { RowBetween } from "../../components/Layout/Row";
+// import { RowBetween } from "../../components/Layout/Row";
 
 const CurrencySelectButton = styled(Button).attrs({
   variant: "text",
