@@ -15,6 +15,7 @@ import ChainToSelector from "./ChainToSelector";
 import Refuel from "./Refuel";
 import styled from "styled-components";
 import { chainToAtom } from "../../state/chainto";
+import TokenSelect from "./TokenSelect";
 
 export const Wrapper = styled.div`
   position: relative;
@@ -107,7 +108,7 @@ export default function BridgeCard() {
                       // defaultValue={amount}
                       // onChange={(e) => setAmount(e.target.value)}
                     />
-                    <ArrowDownIcon />
+                    <TokenSelect />
                   </RowBetween>
                 </Flex>
                 <Flex width="100%" justifyContent="center" alignItems="center">
