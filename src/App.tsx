@@ -11,6 +11,7 @@ import {
   polygon,
   polygonMumbai,
 } from "@reown/appkit/networks";
+
 import { roburnaNetwork, roburnaTestnetNetwork } from "./config/network";
 import { projectId, metadata } from "./config/walletconnect";
 import BridgeCard from "./bridge/components/BridgeCard";
@@ -35,6 +36,7 @@ createAppKit({
     socials: [],
   },
 });
+
 function App() {
   return (
     <>

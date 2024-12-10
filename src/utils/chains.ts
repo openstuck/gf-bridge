@@ -1,6 +1,5 @@
 export const chains = [
   {
-    id: 1,
     name: "Binance",
     chainId: 56,
     shortName: "BNB",
@@ -10,7 +9,15 @@ export const chains = [
     icon: "/images/home2.0/coin-icons/bnb.svg",
   },
   {
-    id: 2,
+    name: "Binance Testnet",
+    chainId: 97,
+    shortName: "BNB Testnet",
+    chain: "BNB",
+    network: "mainnet",
+    networkId: 56,
+    icon: "/images/home2.0/coin-icons/bnb.svg",
+  },
+  {
     name: "Ethereum",
     chainId: 1,
     shortName: "ETH",
@@ -20,7 +27,6 @@ export const chains = [
   },
 
   {
-    id: 3,
     name: "Roburna",
     chainId: 156,
     shortName: "RBA",
@@ -30,7 +36,6 @@ export const chains = [
     icon: "/images/home2.0/roburna-blockchain.svg",
   },
   {
-    id: 2,
     name: "Solana",
     chainId: 101,
     shortName: "SOL",
@@ -40,3 +45,10 @@ export const chains = [
     icon: "/images/home2.0/solana.svg",
   },
 ];
+
+export const getChainByChainId = (chainId: number | undefined | string) => {
+  if (!chainId) return chains[0];
+  const numChain = Number(chainId);
+  console.log({ numChain });
+  return chains.find((chain) => chain.chainId === numChain) || chains[0];
+};

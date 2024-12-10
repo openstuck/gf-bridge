@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import { Button, Flex, useModal } from "../../uikit";
+import { Button, Flex } from "../../uikit";
+import { useAppKit } from "@reown/appkit/react";
 
 interface ChainSelectorProps {
   chain?: any;
-  disableChainSelect?: boolean;
-  setChain?: any;
-  hideInfo?: boolean;
   title?: string;
 }
 const ChainSelectButton = styled(Button).attrs({
@@ -14,19 +12,22 @@ const ChainSelectButton = styled(Button).attrs({
 })`
   padding: 0 0.5rem;
 `;
+
 export default function ChainSelector({
   chain = { icon: "/images/home2.0/coin-icons/bnb.svg", name: "Binance" },
-  disableChainSelect = false,
-  setChain,
-  hideInfo = false,
   title,
 }: ChainSelectorProps) {
+  const { open } = useAppKit();
   return (
     <>
       <Flex flexDirection="row" alignItems="center">
         <ChainSelectButton
           className="open-chain-select-button"
-          onClick={() => {}}
+          onClick={() => {
+            open({
+              view: "Networks",
+            });
+          }}
         >
           <Flex alignItems="center" justifyContent="space-between">
             <span>{title}</span>
@@ -39,14 +40,6 @@ export default function ChainSelector({
               />
               {chain.name}
             </Flex>
-
-            {!hideInfo && !disableChainSelect && (
-              <img
-                src="/images/home2.0/green-down-arrow.svg"
-                alt="arrow-down"
-                style={{ paddingLeft: "10px" }}
-              />
-            )}
           </Flex>
         </ChainSelectButton>
       </Flex>

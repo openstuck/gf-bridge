@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react";
 import { AppBody } from "../../components/App";
 import { AutoColumn } from "../../components/Layout/Column";
 import { RowBetween } from "../../components/Layout/Row";
+import { useAtomValue } from "jotai";
 
-import { ArrowDownIcon, Button, Flex, Heading, Input, Text } from "../../uikit";
-import {
-  useAppKit,
-  useAppKitNetwork,
-  useAppKitAccount,
-} from "@reown/appkit/react";
+import { ArrowDownIcon, Flex, Heading, Input, Text } from "../../uikit";
+import { useAppKitNetwork, useAppKitAccount } from "@reown/appkit/react";
 
-import { chains } from "../../utils/chains";
+import { getChainByChainId } from "../../utils/chains";
 
 // import CurrencyCard from "./CurrencyCard";
 import ChainSelector from "./ChainSelector";
+import ChainToSelector from "./ChainToSelector";
+
 import Refuel from "./Refuel";
 import styled from "styled-components";
+import { chainToAtom } from "../../state/chainto";
 
 export const Wrapper = styled.div`
   position: relative;
@@ -23,13 +22,11 @@ export const Wrapper = styled.div`
 `;
 
 export default function BridgeCard() {
-  const { chainId, switchNetwork } = useAppKitNetwork();
-  const { address, isConnected, caipAddress, status } = useAppKitAccount();
+  const { chainId } = useAppKitNetwork();
+  const { address } = useAppKitAccount();
   const handleMaxInput = () => {};
 
-  const { fromChain, setFromChain } = useState(0);
-
-  useEffect(() => {}, [fromChain, chainId]);
+  const chainTo = useAtomValue(chainToAtom);
 
   return (
     <Flex
@@ -71,7 +68,10 @@ export default function BridgeCard() {
                     className="padding-imp"
                     style={{ borderBottom: "1px solid #222230" }}
                   >
-                    <ChainSelector chain={chains[0]} title="From" />
+                    <ChainSelector
+                      chain={getChainByChainId(chainId)}
+                      title="From"
+                    />
                     {address && (
                       <Flex alignItems="center">
                         <Text
@@ -103,9 +103,11 @@ export default function BridgeCard() {
                       type="number"
                       className="amountInput"
                       placeholder="0.0"
+                      scale="md"
                       // defaultValue={amount}
                       // onChange={(e) => setAmount(e.target.value)}
                     />
+                    <ArrowDownIcon />
                   </RowBetween>
                 </Flex>
                 <Flex width="100%" justifyContent="center" alignItems="center">
@@ -123,8 +125,15 @@ export default function BridgeCard() {
                   style={{ marginTop: "20px", borderRadius: "4px" }}
                 >
                   <AutoColumn gap="md">
-                    <RowBetween align="center" className="padding-imp">
-                      <ChainSelector chain={chains[2]} hideInfo title="To" />
+                    <RowBetween
+                      align="center"
+                      className="padding-imp"
+                      style={{ borderBottom: "1px solid #222230" }}
+                    >
+                      <ChainToSelector
+                        chain={getChainByChainId(chainTo)}
+                        title="To"
+                      />
 
                       {/* {account && (
                         <Flex alignItems="center">

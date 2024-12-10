@@ -2555,6 +2555,9 @@ iframe {
   border-radius: 10px;
   cursor: pointer;
 }
+.hover-option {
+  padding: 5px 0;
+}
 
 .padding-imp {
   padding: 12px !important;
@@ -2564,6 +2567,7 @@ iframe {
   border: none !important;
   font-weight: 700 !important;
   font-size: 20px !important;
+  box-shadow: none !important;
 }
 
 .amountInput:focus:not(:disabled) {
