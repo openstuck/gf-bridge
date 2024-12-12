@@ -35,20 +35,10 @@ export const chains = [
     networkId: 156,
     icon: "/images/home2.0/roburna-blockchain.svg",
   },
-  {
-    name: "Solana",
-    chainId: 101,
-    shortName: "SOL",
-    chain: "SOL",
-    network: "mainnet",
-    networkId: 101,
-    icon: "/images/home2.0/solana.svg",
-  },
 ];
 
 export const getChainByChainId = (chainId: number | undefined | string) => {
   if (!chainId) return chains[0];
   const numChain = Number(chainId);
-  console.log({ numChain });
   return chains.find((chain) => chain.chainId === numChain) || chains[0];
 };

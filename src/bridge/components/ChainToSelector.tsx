@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import { chains } from "../../utils/chains";
 import { useSetAtom } from "jotai";
 import { chainToAtom } from "../../state/chainto";
+import { bridgedToken } from "../../state/bridgetoken";
 
 interface ChainSelectorProps {
   chain?: any;
@@ -24,6 +25,7 @@ export default function ChainToSelector({
   const [show, setShow] = useState(false);
 
   const selectChain = useSetAtom(chainToAtom);
+  const setBridgeData = useSetAtom(bridgedToken);
 
   return (
     <>
@@ -62,11 +64,18 @@ export default function ChainToSelector({
         <Modal.Body style={{ background: "#000500 !important" }}>
           {chains.map((chain) => (
             <Flex
+              key={chain.chainId}
               className="hover-option"
               alignItems="center"
               mb={3}
               onClick={() => {
                 selectChain(() => chain.chainId);
+                setBridgeData((old) => {
+                  return {
+                    ...old,
+                    toChain: String(chain.chainId),
+                  };
+                });
                 setShow(false);
               }}
             >

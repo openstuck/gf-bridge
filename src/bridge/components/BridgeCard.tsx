@@ -3,7 +3,7 @@ import { AutoColumn } from "../../components/Layout/Column";
 import { RowBetween } from "../../components/Layout/Row";
 import { useAtomValue } from "jotai";
 
-import { ArrowDownIcon, Flex, Heading, Input, Text } from "../../uikit";
+import { Flex, Heading, Input, Text } from "../../uikit";
 import { useAppKitNetwork, useAppKitAccount } from "@reown/appkit/react";
 
 import { getChainByChainId } from "../../utils/chains";
@@ -16,6 +16,15 @@ import Refuel from "./Refuel";
 import styled from "styled-components";
 import { chainToAtom } from "../../state/chainto";
 import TokenSelect from "./TokenSelect";
+import { bridgedToken } from "../../state/bridgetoken";
+import {
+  getTokenDecimals,
+  getTokenImage,
+  getTokenSymbol,
+} from "../../config/tokenlist";
+import { useQuery } from "@tanstack/react-query";
+import { getTokenBalance } from "../../utils/getTokenBalance";
+import { getFullDisplayBalance, toBigNumber } from "../../utils/formatBalance";
 
 export const Wrapper = styled.div`
   position: relative;
@@ -28,6 +37,22 @@ export default function BridgeCard() {
   const handleMaxInput = () => {};
 
   const chainTo = useAtomValue(chainToAtom);
+  const bridgeData = useAtomValue(bridgedToken);
+
+  const tokenImage = getTokenImage(bridgeData.chainId, bridgeData.address);
+  const tokenSymbol = getTokenSymbol(bridgeData.chainId, bridgeData.address);
+  const tokenDecimals = getTokenDecimals(
+    bridgeData.chainId,
+    bridgeData.address
+  );
+
+  const userBalance = useQuery({
+    queryKey: ["tokenbalance" + chainId + address + bridgeData.address],
+    queryFn: async () => {
+      const data = await getTokenBalance(chainId, address, bridgeData.address);
+      return data;
+    },
+  });
 
   return (
     <Flex
@@ -85,13 +110,10 @@ export default function BridgeCard() {
                             paddingRight: "10px",
                           }}
                         >
-                          {/* {currencies[Field.INPUT]
-                            ? t("Bal: %balance%", {
-                                balance:
-                                  selectedCurrencyBalance?.toSignificant(6) ??
-                                  t("Loading"),
-                              })
-                            : " -"} */}
+                          {getFullDisplayBalance(
+                            toBigNumber(userBalance.data),
+                            tokenDecimals
+                          )}
                         </Text>
                         <Text fontSize="14px" color="textSubtle">
                           MAX
@@ -135,23 +157,6 @@ export default function BridgeCard() {
                         chain={getChainByChainId(chainTo)}
                         title="To"
                       />
-
-                      {/* {account && (
-                        <Flex alignItems="center">
-                          <Text
-                            onClick={handleMaxInput}
-                            color="textSubtle"
-                            fontSize="16px"
-                            style={{ display: "inline", cursor: "pointer" }}
-                          >
-                            {currencies[Field.INPUT]
-                              ? t("Bal: %balance%", {
-                                  balance: 0 ?? t("Loading"),
-                                })
-                              : " -"}
-                          </Text>
-                        </Flex>
-                      )} */}
                     </RowBetween>
                   </AutoColumn>
                   <RowBetween align="center" className="padding-imp">
@@ -160,7 +165,18 @@ export default function BridgeCard() {
                       className="amountInput"
                       placeholder="0.0"
                     />
-                    <ArrowDownIcon />
+                    <>
+                      <img
+                        src={tokenImage}
+                        alt={tokenSymbol}
+                        style={{
+                          width: "24px",
+                          height: "24px",
+                          marginRight: "10px",
+                        }}
+                      />
+                      {tokenSymbol}
+                    </>
                   </RowBetween>
                 </Flex>
               </>
