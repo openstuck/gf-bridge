@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
 import { ethers } from "ethers";
-import { formatUnits } from "ethers/lib/utils";
+import { formatUnits, parseUnits } from "ethers/lib/utils";
 import { BIG_TEN } from "./bigNumber";
 
 /**
@@ -91,4 +91,13 @@ export const formatFixedNumber = (
 export const toBigNumber = (amount: string | undefined) => {
   if (!amount) return new BigNumber(0);
   return new BigNumber(amount);
+};
+
+export const tryParseAmount = (amount?: string, dec = 18) => {
+  if (!amount) return "0";
+
+  const typedParsed = parseUnits(amount, dec).toString();
+  if (typedParsed !== "0") {
+    return typedParsed;
+  }
 };

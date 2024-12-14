@@ -62,9 +62,9 @@ export default function ChainToSelector({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ background: "#000500 !important" }}>
-          {chains.map((chain) => (
+          {chains.map((chain, index) => (
             <Flex
-              key={chain.chainId}
+              key={index}
               className="hover-option"
               alignItems="center"
               mb={3}

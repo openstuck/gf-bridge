@@ -62,9 +62,9 @@ const TokenSelect = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ background: "#000500 !important" }}>
-          {listToken.map((chain) => (
+          {listToken.map((chain, index) => (
             <Flex
-              key={"list" + chain.chainId}
+              key={index}
               className="hover-option"
               alignItems="center"
               mb={3}

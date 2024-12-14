@@ -1,3 +1,3 @@
 import { atom } from "jotai";
 
-export const chainToAtom = atom(1);
+export const chainToAtom = atom(56);

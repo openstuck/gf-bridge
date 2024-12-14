@@ -1,7 +1,7 @@
 import { AppBody } from "../../components/App";
 import { AutoColumn } from "../../components/Layout/Column";
 import { RowBetween } from "../../components/Layout/Row";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 
 import { Flex, Heading, Input, Text } from "../../uikit";
 import { useAppKitNetwork, useAppKitAccount } from "@reown/appkit/react";
@@ -24,7 +24,11 @@ import {
 } from "../../config/tokenlist";
 import { useQuery } from "@tanstack/react-query";
 import { getTokenBalance } from "../../utils/getTokenBalance";
-import { getFullDisplayBalance, toBigNumber } from "../../utils/formatBalance";
+import {
+  getFullDisplayBalance,
+  toBigNumber,
+  tryParseAmount,
+} from "../../utils/formatBalance";
 
 export const Wrapper = styled.div`
   position: relative;
@@ -35,6 +39,8 @@ export default function BridgeCard() {
   const { chainId } = useAppKitNetwork();
   const { address } = useAppKitAccount();
   const handleMaxInput = () => {};
+
+  const setBridgeData = useSetAtom(bridgedToken);
 
   const chainTo = useAtomValue(chainToAtom);
   const bridgeData = useAtomValue(bridgedToken);
@@ -53,6 +59,19 @@ export default function BridgeCard() {
       return data;
     },
   });
+
+  const handleInputChange = (e: any) => {
+    const amt = tryParseAmount(e.target.value, tokenDecimals);
+
+    if (amt) {
+      setBridgeData({
+        ...bridgeData,
+        amount: e.target.value,
+        formattedAmount: amt,
+      });
+    }
+  };
+  console.log(bridgeData);
 
   return (
     <Flex
@@ -115,9 +134,9 @@ export default function BridgeCard() {
                             tokenDecimals
                           )}
                         </Text>
-                        <Text fontSize="14px" color="textSubtle">
+                        {/* <Text fontSize="14px" color="textSubtle">
                           MAX
-                        </Text>
+                        </Text> */}
                       </Flex>
                     )}
                   </RowBetween>
@@ -127,8 +146,8 @@ export default function BridgeCard() {
                       className="amountInput"
                       placeholder="0.0"
                       scale="md"
-                      // defaultValue={amount}
-                      // onChange={(e) => setAmount(e.target.value)}
+                      defaultValue={bridgeData.amount}
+                      onChange={handleInputChange}
                     />
                     <TokenSelect />
                   </RowBetween>
@@ -162,6 +181,8 @@ export default function BridgeCard() {
                   <RowBetween align="center" className="padding-imp">
                     <Input
                       type="number"
+                      readOnly
+                      value={bridgeData.receiveAmount}
                       className="amountInput"
                       placeholder="0.0"
                     />
