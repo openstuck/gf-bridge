@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { Button, Flex } from "../../uikit";
-import { useAppKit } from "@reown/appkit/react";
+import { useAppKit, useAppKitNetwork } from "@reown/appkit/react";
+import { getChainByChainId } from "../../utils/chains";
 
 interface ChainSelectorProps {
-  chain?: any;
+  // chain?: any;
   title?: string;
 }
 const ChainSelectButton = styled(Button).attrs({
@@ -14,10 +15,13 @@ const ChainSelectButton = styled(Button).attrs({
 `;
 
 export default function ChainSelector({
-  chain = { icon: "/images/home2.0/coin-icons/bnb.svg", name: "Binance" },
+  // chain = { icon: "/images/home2.0/coin-icons/bnb.svg", name: "Binance" },
   title,
 }: ChainSelectorProps) {
   const { open } = useAppKit();
+  const { chainId } = useAppKitNetwork();
+  const chains = getChainByChainId(chainId);
+  console.log({ chains });
   return (
     <>
       <Flex flexDirection="row" alignItems="center">
@@ -34,11 +38,11 @@ export default function ChainSelector({
 
             <Flex alignItems="center" ml={3}>
               <img
-                src={chain.icon}
-                alt={chain.name}
+                src={chains.icon}
+                alt={chains.name}
                 style={{ width: "24px", height: "24px", marginRight: "6px" }}
               />
-              {chain.name}
+              {chains.name}
             </Flex>
           </Flex>
         </ChainSelectButton>

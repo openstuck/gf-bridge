@@ -7,6 +7,7 @@ export const chains = [
     network: "mainnet",
     networkId: 56,
     icon: "/images/home2.0/coin-icons/bnb.svg",
+    bridgeAddress: "0x0000000000000000000000000000000000001000",
   },
   {
     name: "Binance Testnet",
@@ -16,6 +17,7 @@ export const chains = [
     network: "mainnet",
     networkId: 56,
     icon: "/images/home2.0/coin-icons/bnb.svg",
+    bridgeAddress: "0x0000000000000000000000000000000000001000",
   },
   {
     name: "Ethereum",
@@ -24,21 +26,45 @@ export const chains = [
     chain: "ETH",
     networkId: 1,
     icon: "/images/home2.0/purple-ethereum.svg",
+    bridgeAddress: "0x0000000000000000000000000000000000001000",
   },
 
   {
     name: "Roburna",
-    chainId: 156,
+    chainId: 158,
     shortName: "RBA",
     chain: "RBA",
     network: "mainnet",
-    networkId: 156,
+    networkId: 158,
     icon: "/images/home2.0/roburna-blockchain.svg",
+    bridgeAddress: "0x0000000000000000000000000000000000001000",
+  },
+  {
+    name: "Roburna Testnet",
+    chainId: 159,
+    shortName: "RBA Testnet",
+    chain: "RBA Testnet",
+    network: "mainnet",
+    networkId: 159,
+    icon: "/images/home2.0/roburna-blockchain.svg",
+    bridgeAddress: "0x0000000000000000000000000000000000001000",
   },
 ];
 
 export const getChainByChainId = (chainId: number | undefined | string) => {
+  console.log({ chainId });
   if (!chainId) return chains[0];
   const numChain = Number(chainId);
   return chains.find((chain) => chain.chainId === numChain) || chains[0];
+};
+
+export const getBridgeAddressByChainId = (
+  chainId: number | undefined | string
+) => {
+  if (!chainId) return "0x0000000000000000000000000000000000001000";
+  const numChain = Number(chainId);
+  return (
+    chains.find((chain) => chain.chainId === numChain)?.bridgeAddress ||
+    "0x0000000000000000000000000000000000001000"
+  );
 };

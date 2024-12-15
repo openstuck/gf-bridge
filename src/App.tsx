@@ -20,6 +20,12 @@ createAppKit({
     onramp: false,
     email: false,
     socials: [],
+    swaps: false,
+  },
+  chainImages: {
+    97: "https://raw.githubusercontent.com/openstuck/gf-bridge/9f33e171d5b891397c883a3617b9c88e809c6342/public/images/home2.0/coin-icons/bnb.svg",
+    158: "https://raw.githubusercontent.com/openstuck/gf-bridge/9f33e171d5b891397c883a3617b9c88e809c6342/public/images/home2.0/roburna-blockchain.svg",
+    159: "https://raw.githubusercontent.com/openstuck/gf-bridge/9f33e171d5b891397c883a3617b9c88e809c6342/public/images/home2.0/roburna-blockchain.svg",
   },
 });
 

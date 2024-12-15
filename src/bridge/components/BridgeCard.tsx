@@ -3,16 +3,23 @@ import { AutoColumn } from "../../components/Layout/Column";
 import { RowBetween } from "../../components/Layout/Row";
 import { useAtomValue, useSetAtom } from "jotai";
 
-import { Flex, Heading, Input, Text } from "../../uikit";
-import { useAppKitNetwork, useAppKitAccount } from "@reown/appkit/react";
+import { Flex, Heading, Input, Text, Button } from "../../uikit";
+import {
+  useAppKitNetwork,
+  useAppKitAccount,
+  useAppKit,
+} from "@reown/appkit/react";
 
-import { getChainByChainId } from "../../utils/chains";
+import {
+  getBridgeAddressByChainId,
+  getChainByChainId,
+} from "../../utils/chains";
 
 // import CurrencyCard from "./CurrencyCard";
 import ChainSelector from "./ChainSelector";
 import ChainToSelector from "./ChainToSelector";
 
-import Refuel from "./Refuel";
+// import Refuel from "./Refuel";
 import styled from "styled-components";
 import { chainToAtom } from "../../state/chainto";
 import TokenSelect from "./TokenSelect";
@@ -23,12 +30,16 @@ import {
   getTokenSymbol,
 } from "../../config/tokenlist";
 import { useQuery } from "@tanstack/react-query";
-import { getTokenBalance } from "../../utils/getTokenBalance";
+import {
+  getTokenAllowance,
+  getTokenBalance,
+} from "../../utils/getTokenBalance";
 import {
   getFullDisplayBalance,
   toBigNumber,
   tryParseAmount,
 } from "../../utils/formatBalance";
+import { BigNumber } from "ethers";
 
 export const Wrapper = styled.div`
   position: relative;
@@ -38,7 +49,11 @@ export const Wrapper = styled.div`
 export default function BridgeCard() {
   const { chainId } = useAppKitNetwork();
   const { address } = useAppKitAccount();
+  const { open } = useAppKit();
+
   const handleMaxInput = () => {};
+
+  const activeChain = chainId ? Number(chainId) : 1;
 
   const setBridgeData = useSetAtom(bridgedToken);
 
@@ -60,6 +75,20 @@ export default function BridgeCard() {
     },
   });
 
+  const userAllowance = useQuery({
+    queryKey: ["allowance" + chainId + address + bridgeData.address],
+    queryFn: async () => {
+      const bridgeAddress = getBridgeAddressByChainId(bridgeData.chainId);
+      const data = await getTokenAllowance(
+        chainId,
+        address,
+        bridgeAddress,
+        bridgeData.address
+      );
+      return data;
+    },
+  });
+
   const handleInputChange = (e: any) => {
     const amt = tryParseAmount(e.target.value, tokenDecimals);
 
@@ -71,7 +100,17 @@ export default function BridgeCard() {
       });
     }
   };
-  console.log(bridgeData);
+  // console.log(bridgeData);
+
+  const alreadyAppove = userAllowance.data?.gte(
+    BigNumber.from(bridgeData.formattedAmount)
+  );
+
+  console.log({ alreadyAppove, allow: userAllowance.data });
+
+  const handleApprove = async () => {};
+
+  const handleTransfer = async () => {};
 
   return (
     <Flex
@@ -113,10 +152,7 @@ export default function BridgeCard() {
                     className="padding-imp"
                     style={{ borderBottom: "1px solid #222230" }}
                   >
-                    <ChainSelector
-                      chain={getChainByChainId(chainId)}
-                      title="From"
-                    />
+                    <ChainSelector title="From" />
                     {address && (
                       <Flex alignItems="center">
                         <Text
@@ -202,17 +238,26 @@ export default function BridgeCard() {
                 </Flex>
               </>
             </AutoColumn>
-            <AutoColumn gap="" style={{ marginTop: "20px" }}>
-              <Refuel />
-            </AutoColumn>
+
             <AutoColumn style={{ marginTop: "20px" }}>
-              {/* {accountEllipsis ? (
-                <Button variant="quaternary"> {accountEllipsis}</Button>
-              ) : (
-                <Button onClick={onPresentConnectModal} variant="quaternary">
-                  {t("Connect Wallet")}
+              {!address && (
+                <Button
+                  onClick={() => open({ view: "Connect" })}
+                  variant="quaternary"
+                >
+                  {"Connect Wallet"}
                 </Button>
-              )} */}
+              )}
+
+              {address && alreadyAppove ? (
+                <Button onClick={() => handleTransfer()} variant="quaternary">
+                  {"Transfer"}
+                </Button>
+              ) : (
+                <Button onClick={() => handleApprove()} variant="quaternary">
+                  {"Approve"}
+                </Button>
+              )}
             </AutoColumn>
             <Flex alignItems="center" style={{ marginTop: "20px" }}>
               <RowBetween align="center">

@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Bridge } from "./Bridge";
+export type { Erc20 } from "./Erc20";
 export * as factories from "./factories";
 export { Bridge__factory } from "./factories/Bridge__factory";
+export { Erc20__factory } from "./factories/Erc20__factory";

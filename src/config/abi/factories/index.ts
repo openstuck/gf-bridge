@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { Bridge__factory } from "./Bridge__factory";
+export { Erc20__factory } from "./Erc20__factory";
