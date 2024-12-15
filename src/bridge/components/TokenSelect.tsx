@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Modal from "react-bootstrap/Modal";
 import { ChevronDownIcon, Button, Flex, Heading, Text } from "../../uikit";
@@ -28,6 +28,16 @@ const TokenSelect = () => {
 
   const tokenImage = getTokenImage(bridgeData.chainId, bridgeData.address);
   const tokenSymbol = getTokenSymbol(bridgeData.chainId, bridgeData.address);
+
+  useEffect(() => {
+    setBridgeData((data) => {
+      return {
+        ...data,
+        chainId: listToken[0].chainId,
+        address: listToken[0].address,
+      };
+    });
+  }, []);
 
   return (
     <CurrencySelectButton>

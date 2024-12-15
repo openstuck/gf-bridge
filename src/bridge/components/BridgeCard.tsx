@@ -8,6 +8,7 @@ import {
   useAppKitNetwork,
   useAppKitAccount,
   useAppKit,
+  useAppKitProvider,
 } from "@reown/appkit/react";
 
 import {
@@ -39,7 +40,11 @@ import {
   toBigNumber,
   tryParseAmount,
 } from "../../utils/formatBalance";
-import { BigNumber } from "ethers";
+import { BigNumber, ethers } from "ethers";
+import { Bridge__factory, Erc20__factory } from "../../config/abi";
+import { MAX_APPROVE } from "../../utils/bigNumber";
+// import { staticProvider } from "../../utils/staticProvider";
+// import { chain } from "lodash";
 
 export const Wrapper = styled.div`
   position: relative;
@@ -49,11 +54,23 @@ export const Wrapper = styled.div`
 export default function BridgeCard() {
   const { chainId } = useAppKitNetwork();
   const { address } = useAppKitAccount();
+  const { walletProvider } = useAppKitProvider("eip155");
+  // @ts-ignore
+
+  console.log({ walletProvider, chainId, address });
+
+  // @ts-ignore
+  const provider = walletProvider
+    ? // @ts-ignore
+      new ethers.providers.Web3Provider(walletProvider, chainId)
+    : null;
+  const signer = provider?.getSigner();
+
   const { open } = useAppKit();
 
   const handleMaxInput = () => {};
 
-  const activeChain = chainId ? Number(chainId) : 1;
+  // const activeChain = chainId ? Number(chainId) : 1;
 
   const setBridgeData = useSetAtom(bridgedToken);
 
@@ -69,6 +86,7 @@ export default function BridgeCard() {
 
   const userBalance = useQuery({
     queryKey: ["tokenbalance" + chainId + address + bridgeData.address],
+    staleTime: 1000,
     queryFn: async () => {
       const data = await getTokenBalance(chainId, address, bridgeData.address);
       return data;
@@ -77,6 +95,8 @@ export default function BridgeCard() {
 
   const userAllowance = useQuery({
     queryKey: ["allowance" + chainId + address + bridgeData.address],
+    staleTime: 0,
+
     queryFn: async () => {
       const bridgeAddress = getBridgeAddressByChainId(bridgeData.chainId);
       const data = await getTokenAllowance(
@@ -106,11 +126,31 @@ export default function BridgeCard() {
     BigNumber.from(bridgeData.formattedAmount)
   );
 
-  console.log({ alreadyAppove, allow: userAllowance.data });
+  // console.log({ alreadyAppove, allow: userAllowance.data });
 
-  const handleApprove = async () => {};
+  const handleApprove = async () => {
+    if (!signer) return;
+    const bridgeAddress = getBridgeAddressByChainId(bridgeData.chainId);
+    const contract = Erc20__factory.connect(bridgeData.address, signer);
+    await contract.approve(bridgeAddress, MAX_APPROVE);
+  };
 
-  const handleTransfer = async () => {};
+  const handleTransfer = async () => {
+    if (!signer) return;
+    const bridgeAddress = getBridgeAddressByChainId(bridgeData.chainId);
+    const contract = Bridge__factory.connect(bridgeAddress, signer);
+
+    try {
+      await contract.relayToken(
+        bridgeData.address,
+        address!,
+        ethers.BigNumber.from(bridgeData.formattedAmount),
+        bridgeData.toChain
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Flex
@@ -249,11 +289,13 @@ export default function BridgeCard() {
                 </Button>
               )}
 
-              {address && alreadyAppove ? (
+              {address && alreadyAppove && (
                 <Button onClick={() => handleTransfer()} variant="quaternary">
                   {"Transfer"}
                 </Button>
-              ) : (
+              )}
+
+              {address && !alreadyAppove && (
                 <Button onClick={() => handleApprove()} variant="quaternary">
                   {"Approve"}
                 </Button>

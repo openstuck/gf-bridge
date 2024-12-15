@@ -7,7 +7,7 @@ export const chains = [
     network: "mainnet",
     networkId: 56,
     icon: "/images/home2.0/coin-icons/bnb.svg",
-    bridgeAddress: "0x0000000000000000000000000000000000001000",
+    bridgeAddress: "0x0000000000000000000000000000000000002000",
   },
   {
     name: "Binance Testnet",
@@ -17,7 +17,7 @@ export const chains = [
     network: "mainnet",
     networkId: 56,
     icon: "/images/home2.0/coin-icons/bnb.svg",
-    bridgeAddress: "0x0000000000000000000000000000000000001000",
+    bridgeAddress: "0x0000000000000000000000000000000000002000",
   },
   {
     name: "Ethereum",
@@ -26,7 +26,7 @@ export const chains = [
     chain: "ETH",
     networkId: 1,
     icon: "/images/home2.0/purple-ethereum.svg",
-    bridgeAddress: "0x0000000000000000000000000000000000001000",
+    bridgeAddress: "0x0000000000000000000000000000000000002000",
   },
 
   {
@@ -37,7 +37,7 @@ export const chains = [
     network: "mainnet",
     networkId: 158,
     icon: "/images/home2.0/roburna-blockchain.svg",
-    bridgeAddress: "0x0000000000000000000000000000000000001000",
+    bridgeAddress: "0xE4ad567deb0f538762Be44Fbc574061b7A962cA3",
   },
   {
     name: "Roburna Testnet",
@@ -47,7 +47,7 @@ export const chains = [
     network: "mainnet",
     networkId: 159,
     icon: "/images/home2.0/roburna-blockchain.svg",
-    bridgeAddress: "0x0000000000000000000000000000000000001000",
+    bridgeAddress: "0x0000000000000000000000000000000000002000",
   },
 ];
 
